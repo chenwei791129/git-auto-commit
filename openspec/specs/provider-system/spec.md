@@ -10,42 +10,40 @@ Manages AI provider selection, model configuration, and the shared interface con
 
 The system SHALL accept a `--provider` CLI flag to select the AI provider.
 The flag value MUST override all other provider selection methods.
-Valid values SHALL include `gemini` and `claude-cli`.
+Valid values SHALL include `gemini`, `claude-cli`, and `codex-oauth`.
 
 #### Scenario: Provider specified via CLI flag
 
 - **WHEN** user runs `commit-with-ai --provider claude-cli`
 - **THEN** the system uses the Claude CLI provider regardless of environment variable settings
 
+#### Scenario: Codex OAuth provider specified via CLI flag
+
+- **WHEN** user runs `commit-with-ai --provider codex-oauth`
+- **THEN** the system uses the Codex OAuth provider regardless of environment variable settings
+
 #### Scenario: Invalid provider specified
 
 - **WHEN** user runs `commit-with-ai --provider unknown`
-- **THEN** the system exits with an error message listing valid provider names
+- **THEN** the system exits with an error message listing valid provider names including `codex-oauth`
 
 
 <!-- @trace
-source: add-claude-cli-provider
-updated: 2026-03-23
+source: add-codex-oauth-provider
+updated: 2026-06-16
 code:
-  - commit_with_ai/providers/base.py
   - commit_with_ai/providers/gemini.py
-  - commit_with_ai.py
-  - tests/__init__.py
-  - commit_with_ai/providers/claude_cli.py
-  - uv.lock
-  - commit_with_ai/providers/__init__.py
-  - commit_with_ai/core.py
-  - commit_with_ai/__init__.py
   - pyproject.toml
-  - commit_with_ai/__main__.py
   - README.md
-  - scripts/poc_claude_cli.py
+  - uv.lock
+  - commit_with_ai/__main__.py
+  - scripts/poc_codex_oauth.py
+  - commit_with_ai/providers/claude_cli.py
+  - commit_with_ai/providers/codex_oauth.py
+  - commit_with_ai/providers/_prompt.py
 tests:
-  - tests/test_providers_gemini.py
-  - tests/test_core.py
-  - tests/test_providers_base.py
   - tests/test_cli.py
-  - tests/test_providers_claude_cli.py
+  - tests/test_providers_codex_oauth.py
 -->
 
 ---
