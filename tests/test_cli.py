@@ -3,7 +3,14 @@
 import os
 from unittest.mock import patch
 
-from commit_with_ai.__main__ import parse_args, resolve_provider_name, resolve_model
+import pytest
+
+from commit_with_ai.__main__ import (
+    get_provider,
+    parse_args,
+    resolve_model,
+    resolve_provider_name,
+)
 
 
 class TestParseArgs:
@@ -15,6 +22,19 @@ class TestParseArgs:
     def test_provider_flag(self):
         args = parse_args(["--provider", "claude-cli"])
         assert args.provider == "claude-cli"
+
+    def test_codex_oauth_provider_flag_accepted(self):
+        args = parse_args(["--provider", "codex-oauth"])
+        assert args.provider == "codex-oauth"
+
+
+class TestGetProvider:
+    def test_unknown_provider_lists_codex_oauth(self, capsys):
+        # argparse choices intercepts `--provider unknown`, so the unknown branch
+        # is reached only via non-flag paths (e.g. COMMIT_AI_PROVIDER).
+        with pytest.raises(SystemExit):
+            get_provider("unknown", "")
+        assert "codex-oauth" in capsys.readouterr().out
 
     def test_model_flag(self):
         args = parse_args(["--model", "sonnet"])

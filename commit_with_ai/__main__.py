@@ -13,7 +13,7 @@ from commit_with_ai.core import (
     get_user_selection,
 )
 
-VALID_PROVIDERS = ["gemini", "claude-cli"]
+VALID_PROVIDERS = ["gemini", "claude-cli", "codex-oauth"]
 
 
 def _handle_sigterm(signum, frame):
@@ -64,6 +64,10 @@ def get_provider(provider_name: str, model: str):
         from commit_with_ai.providers.claude_cli import ClaudeCliProvider
 
         return ClaudeCliProvider(model=model)
+    elif provider_name == "codex-oauth":
+        from commit_with_ai.providers.codex_oauth import CodexOAuthProvider
+
+        return CodexOAuthProvider(model=model)
     else:
         print(f"Error: Unknown provider '{provider_name}'. Valid: {', '.join(VALID_PROVIDERS)}")
         sys.exit(1)

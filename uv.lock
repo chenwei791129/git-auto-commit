@@ -232,10 +232,11 @@ wheels = [
 
 [[package]]
 name = "commit-with-ai"
-version = "1.1.0"
+version = "1.2.0"
 source = { editable = "." }
 dependencies = [
     { name = "google-genai" },
+    { name = "httpx" },
 ]
 
 [package.optional-dependencies]
@@ -247,6 +248,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "google-genai", specifier = ">=1.68.0" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=9.0.2" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.15.7" },
 ]
