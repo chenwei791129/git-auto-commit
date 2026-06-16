@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/chenwei791129/commit-with-ai/compare/v1.2.0...v1.3.0) (2026-06-16)
+
+
+### Features
+
+* **providers:** add codex-oauth provider using local codex OAuth token ([fab1ad8](https://github.com/chenwei791129/commit-with-ai/commit/fab1ad8c19b05f6f497df2e36c1247c6e5b1070e))
+
+
+### Documentation
+
+* **readme:** add Codex OAuth usage instructions ([355af85](https://github.com/chenwei791129/commit-with-ai/commit/355af853e6f87c43cc328d5fb187af3c46a6b5df))
+
 ## [1.2.0](https://github.com/chenwei791129/commit-with-ai/compare/v1.1.0...v1.2.0) (2026-03-24)
 
 
