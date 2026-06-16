@@ -1,6 +1,6 @@
 # Commit with AI
 
-AI-powered git commit message generator supporting multiple AI providers (Gemini API, Claude CLI).
+AI-powered git commit message generator supporting multiple AI providers (Gemini API, Claude CLI, Codex OAuth).
 
 ## What It Does
 
@@ -38,6 +38,9 @@ commit-with-ai
 
 # Use Claude CLI
 commit-with-ai --provider claude-cli
+
+# Use Codex OAuth (reuses your codex ChatGPT login)
+commit-with-ai --provider codex-oauth
 
 # Or set via environment variable
 export COMMIT_AI_PROVIDER="claude-cli"
@@ -89,6 +92,28 @@ claude login
 |---------|---------|
 | Model   | `haiku` |
 
+### Codex OAuth Provider
+
+Reuses the OAuth credentials that [codex](https://github.com/openai/codex) stores locally after you log in with a ChatGPT account. No API key needed — it reads the existing access token from `~/.codex/auth.json` and calls the same backend codex uses.
+
+**Prerequisites**: [codex](https://github.com/openai/codex) must be installed and logged in with a ChatGPT account (`auth_mode` must be `chatgpt`).
+
+```bash
+# Install codex (if not already installed)
+npm install -g @openai/codex
+
+# Log in with your ChatGPT account
+codex login
+```
+
+When the stored access token has expired, this provider does **not** refresh it automatically. Run `codex` once to refresh the login, then retry `commit-with-ai`.
+
+> **Note**: This provider talks to codex's non-public backend interface (`https://chatgpt.com/backend-api/codex`). That interface is undocumented and may change without notice, which could break this provider until it is updated.
+
+| Setting | Default |
+|---------|---------|
+| Model   | `gpt-5.4-mini` |
+
 ### Configure Git Alias
 
 ```bash
@@ -114,7 +139,7 @@ commit-with-ai --provider claude-cli --model sonnet
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `COMMIT_AI_PROVIDER` | AI provider (`gemini`, `claude-cli`) | `gemini` |
+| `COMMIT_AI_PROVIDER` | AI provider (`gemini`, `claude-cli`, `codex-oauth`) | `gemini` |
 | `COMMIT_AI_MODEL` | AI model name | Provider-specific |
 | `GEMINI_API_KEY` | Gemini API key (for gemini provider) | — |
 | `GOOGLE_API_KEY` | Alternative Gemini API key | — |
