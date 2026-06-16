@@ -1,7 +1,6 @@
 ---
 name: spectra-propose
 description: "Create a change proposal with all required artifacts"
-effort: xhigh
 license: MIT
 compatibility: Requires spectra CLI.
 metadata:
@@ -12,11 +11,11 @@ metadata:
 
 Create a complete Spectra change proposal — from requirement to validated artifacts — in a single workflow.
 
-**Input**: The argument after `/spectra-propose` is the requirement description. Examples:
+**Input**: The argument after `$spectra-propose` is the requirement description. Examples:
 
-- `/spectra-propose add dark mode`
-- `/spectra-propose fix the login page crash`
-- `/spectra-propose improve search performance`
+- `$spectra-propose add dark mode`
+- `$spectra-propose fix the login page crash`
+- `$spectra-propose improve search performance`
 
 If no argument is provided, the workflow will extract requirements from conversation context or ask.
 
@@ -29,8 +28,8 @@ If no argument is provided, the workflow will extract requirements from conversa
    a. **Argument provided** (e.g., "add dark mode") → use it as the requirement description, skip to deriving the change name below.
 
    b. **Plan file available**:
-   - Check if the conversation context mentions a plan file path (plan mode system messages include the path like `~/.claude/plans/<name>.md`)
-   - If found, check if the file exists at `~/.claude/plans/`
+   - Check if the conversation context mentions a plan file path (plan mode system messages include the path like `<name>.md`)
+   - If found, check if the file exists at ``
    - If a plan file is found, use the **AskUserQuestion tool** to ask:
      - Option 1: Use the plan file
      - Option 2: Use conversation context
@@ -78,7 +77,7 @@ If no argument is provided, the workflow will extract requirements from conversa
 4. **Create the change directory**
 
    ```bash
-   spectra new change "<name>" --agent claude
+   spectra new change "<name>" --agent codex
    ```
 
    If a change with that name already exists, suggest continuing the existing change instead of creating a new one.
@@ -357,11 +356,11 @@ If no argument is provided, the workflow will extract requirements from conversa
     spectra park "<name>"
     ```
 
-    Inform the user that the change is parked and that running `/spectra-apply <change-name>` when ready will auto-unpark the change and start implementation.
+    Inform the user that the change is parked and that running `$spectra-apply <change-name>` when ready will auto-unpark the change and start implementation.
 
-    If you are currently in Codex Plan Mode, also remind the user to switch the session to normal mode before running `/spectra-apply <change-name>`. This is only a reminder: do NOT try to use ExitPlanMode or EnterPlanMode, do NOT ask whether to switch modes, and do NOT invoke apply.
+    If you are currently in Codex Plan Mode, also remind the user to switch the session to normal mode before running `$spectra-apply <change-name>`. This is only a reminder: do NOT try to use ExitPlanMode or EnterPlanMode, do NOT ask whether to switch modes, and do NOT invoke apply.
 
-    The propose workflow ENDS here. Do NOT invoke `/spectra-apply`. Do NOT call **AskUserQuestion** to ask whether to park or apply. This behavior is identical across Auto Mode, interactive mode, and any other agent mode — parking is unconditional and does not depend on `AskUserQuestion` availability or UI auto-accept settings.
+    The propose workflow ENDS here. Do NOT invoke `$spectra-apply`. Do NOT call **AskUserQuestion** to ask whether to park or apply. This behavior is identical across Auto Mode, interactive mode, and any other agent mode — parking is unconditional and does not depend on `AskUserQuestion` availability or UI auto-accept settings.
 
 **Artifact Creation Guidelines**
 
@@ -383,5 +382,5 @@ If no argument is provided, the workflow will extract requirements from conversa
 - **NEVER** write application code or implement features during this workflow
 - **NEVER** skip the artifact workflow to write code directly
 - **NEVER** reinterpret requirements by ignoring the proposal file
-- **NEVER** invoke `/spectra-apply` — this workflow ends after artifact creation. The user decides when to start implementation
+- **NEVER** invoke `$spectra-apply` — this workflow ends after artifact creation. The user decides when to start implementation
 - If **AskUserQuestion tool** is not available, ask the same questions as plain text and wait for the user's response
